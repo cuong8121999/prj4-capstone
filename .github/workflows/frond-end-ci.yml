@@ -26,6 +26,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
+        cd starter/fronted/
         ls
 
   #   - name: check code with eslint rules
