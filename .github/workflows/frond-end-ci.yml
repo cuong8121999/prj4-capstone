@@ -25,7 +25,8 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
-      run: ls
+      run: |
+        ls
 
   #   - name: check code with eslint rules
   #     run: npm --prefix ../../starter/frontend/ run lint
