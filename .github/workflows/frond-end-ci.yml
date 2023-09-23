@@ -23,6 +23,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+    
+    - name: Direct to folder containing package.json
+      run: cd ../../starter/frontend/src/
+
+    - name: Install Dependencies
+      run: npm install
 
     - name: check code with eslint rules
       run: npm run lint
@@ -46,6 +52,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+
+    - name: Direct to folder containing package.json
+      run: cd ../../starter/frontend/src/
 
     - name: Install Dependencies
       run: npm install
