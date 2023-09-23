@@ -26,6 +26,7 @@ jobs:
 
     - name: redirect folder
       run: cd starter/frontend/
+      working-directory: cd starter/frontend/ 
 
     - name: list files and subfolders
       run: ls
