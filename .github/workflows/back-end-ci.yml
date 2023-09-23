@@ -58,7 +58,7 @@ jobs:
       run: pipenv install
 
     - name: Install essential python packages
-      run: pipenv install -r Pipfile
+      run: pipenv install -r Pipfile.txt
 
     - name: Run the tests
       run: pipenv run lint
