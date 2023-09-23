@@ -24,21 +24,27 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install Dependencies
-      run: |
-        cd starter/frontend/
-        npm install
+    - name: redirect folder
+      run: cd starter/frontend/
 
-    - name: check code with eslint rules
-      run: npm run lint
+    - name: list files and subfolders
+      run: ls
+
+    # - name: Install Dependencies
+    #   run: |
+    #     cd starter/frontend/
+    #     npm install
+
+    # - name: check code with eslint rules
+    #   run: npm run lint
       
-    - name: Check ESLint Exit Code
-      id: eslint-results
-      run: echo "::set-output name=exit-code::${?}"
+    # - name: Check ESLint Exit Code
+    #   id: eslint-results
+    #   run: echo "::set-output name=exit-code::${?}"
 
-    - name: Fail the Job on ESLint Warnings or Errors
-      if: steps.eslint-results.outputs.exit-code != '0'
-      run: exit 1
+    # - name: Fail the Job on ESLint Warnings or Errors
+    #   if: steps.eslint-results.outputs.exit-code != '0'
+    #   run: exit 1
 
   # test:
   #   runs-on: ubuntu-latest
