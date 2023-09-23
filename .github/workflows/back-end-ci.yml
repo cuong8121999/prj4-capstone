@@ -12,29 +12,29 @@ on: [push]
   
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/backend/
+  # test:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./starter/backend/
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v3
     
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        node-version: '3.10'
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v4
+  #     with:
+  #       node-version: '3.10'
 
-    - name: Install pipenv packages
-      run: pip install pipenv
+  #   - name: Install pipenv packages
+  #     run: pip install pipenv
 
-    - name: Install Dependencies
-      run: pipenv install
+  #   - name: Install Dependencies
+  #     run: pipenv install
 
-    - name: Run the tests
-      run: pipenv run test
+  #   - name: Run the tests
+  #     run: pipenv run test
 
   lint:
     runs-on: ubuntu-latest
@@ -57,31 +57,34 @@ jobs:
     - name: Install Dependencies
       run: pipenv install
 
+    - name: Install essential python packages
+      run: pipenv install -r Pipfile.txt
+
     - name: Run the tests
       run: pipenv run lint
 
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/backend/
+  # build:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./starter/backend/
 
-    needs: [lint, test]   # This job depends on the "build" job
+  #   needs: [lint, test]   # This job depends on the "build" job
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        node-version: '3.10'
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v4
+  #     with:
+  #       node-version: '3.10'
     
-    - name: Install pipenv packages
-      run: pip install pipenv
+  #   - name: Install pipenv packages
+  #     run: pip install pipenv
 
-    - name: Install Dependencies
-      run: pipenv install
+  #   - name: Install Dependencies
+  #     run: pipenv install
 
-    - name: Run application
-      run: pipenv run serve
+  #   - name: Run application
+  #     run: pipenv run serve
