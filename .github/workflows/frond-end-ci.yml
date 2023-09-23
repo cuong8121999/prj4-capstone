@@ -25,7 +25,7 @@ jobs:
         node-version: 18
     
     - name: Direct to folder containing package.json
-      run: cd ../../starter/frontend/src/
+      run: cd ../../starter/frontend/
 
     - name: Install Dependencies
       run: npm install
@@ -54,7 +54,7 @@ jobs:
         node-version: 18
 
     - name: Direct to folder containing package.json
-      run: cd ../../starter/frontend/src/
+      run: cd ../../starter/frontend/
 
     - name: Install Dependencies
       run: npm install
