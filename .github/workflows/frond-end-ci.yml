@@ -24,9 +24,9 @@ jobs:
       with:
         node-version: 18
 
-    # - name: Install Dependencies
-    #   run: |
-    #     echo "Hello World!"
+    - name: Install Dependencies
+      run: |
+        ls
 
   #   - name: check code with eslint rules
   #     run: npm --prefix ../../starter/frontend/ run lint
@@ -77,4 +77,4 @@ jobs:
   #   - name: Build
   #     run: |
   #       # Your build commands here
-        echo "Successfully built"
+        # echo "Successfully built"
