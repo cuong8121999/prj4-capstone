@@ -23,9 +23,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-    
-    - name: Direct to folder containing package.json
-      run: cd ../../starter/frontend/
+        cache: 'npm'
+        cache-dependency-path: ../../starter/frontend/package-lock.json
 
     - name: Install Dependencies
       run: npm install
@@ -52,9 +51,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-
-    - name: Direct to folder containing package.json
-      run: cd ../../starter/frontend/
+        cache: 'npm'
+        cache-dependency-path: ../../starter/frontend/package-lock.json
 
     - name: Install Dependencies
       run: npm install
