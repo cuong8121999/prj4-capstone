@@ -51,17 +51,18 @@ jobs:
       with:
         node-version: '3.10'
 
-    # - name: Install pipenv packages
-    #   run: pip install pipenv
+    - name: Install pipenv packages
+      run: pip install pipenv
 
-    # - name: Install Dependencies
-    #   run: pipenv install
+    - name: Install Dependencies
+      run: pipenv install
 
-    # - name: Install essential python packages
-    #   run: pipenv install -r Pipfile.txt
+    - name: Install essential python packages
+      run: pipenv install -r Pipfile
 
     - name: Run the tests
-      run: ls -l
+      run: pipenv run lint
+
   # build:
   #   runs-on: ubuntu-latest
   #   defaults:
