@@ -1,6 +1,6 @@
 name: Front End of Node JS Application - CI
 
-on: [push]
+on: workflow_dispatch
   # # trigger on pull_request events
   # pull_request:
   #   # On the main branch
@@ -26,9 +26,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-
-    - name: list files and subfolders
-      run: ls
 
     - name: Install Dependencies
       run: npm install
