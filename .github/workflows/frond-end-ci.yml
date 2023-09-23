@@ -1,6 +1,6 @@
 name: Front End of Node JS Application - CI
 
-on: workflow_dispatch
+on: [push]
   # # trigger on pull_request events
   # pull_request:
   #   # On the main branch

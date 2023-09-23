@@ -36,54 +36,52 @@ jobs:
     - name: Run the tests
       run: pipenv run test
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./starter/frontend/
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./starter/backend/
 
-  #   steps:
-  #   - name: Checkout Repository
-  #     uses: actions/checkout@v3
-
-  #   - name: Set up Node.js
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: 18
-
-  #   - name: Install Dependencies
-  #     run: npm ci
-
-  #   - name: Run Tests
-  #     run: npm test # Adjust the test script as per your project
-
-  #   - name: Check Test Exit Code
-  #     id: test-results
-  #     run: echo "::set-output name=exit-code::${?}"
-
-  #   - name: Fail the Job on Test Failure
-  #     if: steps.test-results.outputs.exit-code != '0'
-  #     run: exit 1
-
-  # build:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./starter/frontend/
-
-  #   needs: [lint, test]   # This job depends on the "build" job
-
-  #   steps:
-  #   - name: Checkout Repository
-  #     uses: actions/checkout@v3
-
-  #   - name: Set up Node.js
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: 18
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
     
-  #   - name: Install Dependencies
-  #     run: npm ci
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        node-version: '3.10'
 
-  #   - name: Run local development server with hot reloading and point to the backend default
-  #     run: REACT_APP_MOVIE_API_URL=http://localhost:5000 npm start
+    - name: Install pipenv packages
+      run: pip install pipenv
+
+    - name: Install Dependencies
+      run: pipenv install
+
+    - name: Run the tests
+      run: pipenv run lint
+
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./starter/frontend/
+
+    needs: [lint, test]   # This job depends on the "build" job
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    
+    - name: Install pipenv packages
+      run: pip install pipenv
+
+    - name: Install Dependencies
+      run: pipenv install
+
+    - name: Run application
+      run: pipenv run serve
