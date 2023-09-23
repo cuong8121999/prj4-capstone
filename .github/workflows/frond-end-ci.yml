@@ -22,7 +22,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: latest
+        node-version: 18
 
     - name: check code with eslint rules
       run: npm run lint
@@ -45,7 +45,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: latest
+        node-version: 18
 
     - name: Install Dependencies
       run: npm install
