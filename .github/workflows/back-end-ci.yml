@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./starter/frontend/
+        working-directory: ./starter/backend/
 
     needs: [lint, test]   # This job depends on the "build" job
 
