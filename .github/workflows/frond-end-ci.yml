@@ -1,0 +1,76 @@
+name: Front End of Node JS Application - CI
+
+on: workflow_dispatch
+  # # trigger on pull_request events
+  # pull_request:
+  #   # On the main branch
+  #   branches:
+  #     - main 
+  #   # Only when code in fronted application changes
+  #   paths:
+  #     - 'starter/frontend/**'
+  
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: latest
+
+    - name: check code with eslint rules
+      run: npm run lint
+      
+    - name: Check ESLint Exit Code
+      id: eslint-results
+      run: echo "::set-output name=exit-code::${?}"
+
+    - name: Fail the Job on ESLint Warnings or Errors
+      if: steps.eslint-results.outputs.exit-code != '0'
+      run: exit 1
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: latest
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Tests
+      run: npm test # Adjust the test script as per your project
+
+    - name: Check Test Exit Code
+      id: test-results
+      run: echo "::set-output name=exit-code::${?}"
+
+    - name: Fail the Job on Test Failure
+      if: steps.test-results.outputs.exit-code != '0'
+      run: exit 1
+
+  build:
+    runs-on: ubuntu-latest
+
+    needs: [lint, test]   # This job depends on the "build" job
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build
+      run: |
+        # Your build commands here
+        echo "Successfully built"
