@@ -26,7 +26,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        ls
+        echo "Hello World!"
 
   #   - name: check code with eslint rules
   #     run: npm --prefix ../../starter/frontend/ run lint
