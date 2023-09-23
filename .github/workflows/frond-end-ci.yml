@@ -60,7 +60,7 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     - name: Run Tests
       run: npm test # Adjust the test script as per your project
@@ -91,7 +91,7 @@ jobs:
         node-version: 18
     
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
-    - name: Build App
-      run: npm run build
+    - name: Run local development server with hot reloading and point to the backend default
+      run: REACT_APP_MOVIE_API_URL=http://localhost:5000 npm start
