@@ -72,7 +72,7 @@ jobs:
     - name: Build the image
       run: |
         docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag=mp-frontend:${{ github.sha }} .
-        docker run --name mp-frontend -p 3000:3000 -d mp-frontend
+        docker run --name mp-frontend -p 3000:3000 -d mp-frontend:${{ github.sha }}
 
   # terraform:
   #   runs-on: ubuntu-latest
