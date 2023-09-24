@@ -1,6 +1,6 @@
 name: Back-End of Node JS Application - CI
 
-on: [push]
+on: [workflow_dispatch]
   # # trigger on pull_request events
   # pull_request:
   #   # On the main branch
