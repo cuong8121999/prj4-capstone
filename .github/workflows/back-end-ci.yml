@@ -55,13 +55,10 @@ jobs:
       run: pip install pipenv
 
     - name: Install Dependencies
-      run: |
-        pipenv install
-        pipenv shell
-        pip freeze
+      run: pipenv install
 
-    # - name: Run the tests
-    #   run: pipenv run lint
+    - name: Run the tests
+      run: pipenv run lint
 
   # build:
   #   runs-on: ubuntu-latest
