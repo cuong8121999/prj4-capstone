@@ -57,7 +57,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pipenv install
-        pipenv lock -r
+        pipenv run pip freeze
 
     # - name: Run the tests
     #   run: pipenv run lint
