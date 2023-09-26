@@ -1,8 +1,5 @@
 name: Front End of Node JS Application - CD
-on:
-  push:
-    branches:
-      - '.github/workflows/**'
+on: [push]
   # push:
   #   branches:
   #     - main
