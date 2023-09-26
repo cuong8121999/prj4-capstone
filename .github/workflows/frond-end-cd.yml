@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./starter/frontend/k8s
+        working-directory: ./starter/frontend/
 
     needs: test   # This job depends on the "build" job
 
@@ -102,10 +102,12 @@ jobs:
 
     - name: Kubeconfig Auth
       run: |
+        cd k8s
         aws eks update-kubeconfig --name cluster --region us-east-1
     
     - name: Apply the manifests to the cluster
       run: |
+        cd k8s
         kustomize build .
 
 
