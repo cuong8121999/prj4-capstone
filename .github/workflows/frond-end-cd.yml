@@ -130,7 +130,7 @@ jobs:
         REPOSITORY: frontend
       run: |
         cd k8s
-        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/fronted:$ {{ SHA }}
+        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/frontend:${{ SHA }}
         kustomize build | kubectl apply -f -
 
 
