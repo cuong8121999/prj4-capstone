@@ -127,9 +127,13 @@ jobs:
       run: aws eks update-kubeconfig --name cluster
 
     - name: Apply the manifests to the cluster
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: frontend
+        IMAGE_TAG: ${{ github.sha }}
       run: |
         cd k8s
-        kustomize edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend:abcb59d6a489a40aabe3aa12ab87721510831d6c
+        kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
         kustomize build | kubectl apply -f -
 
 
