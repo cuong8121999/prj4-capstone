@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        # working-directory: ./starter/frontend/
+        working-directory: ./starter/frontend/
 
     # needs: test   # This job depends on the "build" job
 
