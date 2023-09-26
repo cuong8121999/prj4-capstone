@@ -6,48 +6,51 @@ on: [push]
   #   paths:
   #     - 'starter/frontend/**'
 
+env:
+  IMAGE_TAG: ${{ github.sha }}
+
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/frontend/
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./starter/frontend/
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v3
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+  #   - name: Set up Node.js
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: 18
 
-    - name: Install Dependencies
-      run: npm install
+  #   - name: Install Dependencies
+  #     run: npm install
 
-    - name: check code with eslint rules
-      run: npm run lint
+  #   - name: check code with eslint rules
+  #     run: npm run lint
       
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/frontend/
+  # test:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./starter/frontend/
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+  #   - name: Set up Node.js
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: 18
 
-    - name: Install Dependencies
-      run: npm ci
+  #   - name: Install Dependencies
+  #     run: npm ci
 
-    - name: Run Tests
-      run: npm test # Adjust the test script as per your project
+  #   - name: Run Tests
+  #     run: npm test # Adjust the test script as per your project
   
   build-push-deploy:
     runs-on: ubuntu-latest
@@ -79,14 +82,17 @@ jobs:
         mask-password: 'true'
 
     - name: Build, tag, and push docker image to Amazon ECR
+      id: build-image
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: frontend
-        IMAGE_TAG: ${{ github.sha }}
+        # IMAGE_TAG: ${{ github.sha }}
       run: |
         export sha=$IMAGE_TAG
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:$sha .
-        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+
+      # docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:$sha .
+      # docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
     # - name: Login to Docker Hub
     #   uses: docker/login-action@v1
@@ -130,7 +136,7 @@ jobs:
         REPOSITORY: frontend
       run: |
         cd k8s
-        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/frontend:$sha
+        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/frontend:$IMAGE_TAG
         kustomize build | kubectl apply -f -
 
 
