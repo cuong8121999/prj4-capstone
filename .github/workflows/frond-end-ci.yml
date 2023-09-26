@@ -1,6 +1,6 @@
 name: Front End of Node JS Application - CI
 
-on: [workflow_dispatch]
+on: [push]
   # # trigger on pull_request events
   # pull_request:
   #   # On the main branch
@@ -26,6 +26,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
 
     - name: Install Dependencies
       run: npm install
@@ -33,14 +35,6 @@ jobs:
     - name: check code with eslint rules
       run: npm run lint
       
-    - name: Check ESLint Exit Code
-      id: eslint-results
-      run: echo "::set-output name=exit-code::${?}"
-
-    - name: Fail the Job on ESLint Warnings or Errors
-      if: steps.eslint-results.outputs.exit-code != '0'
-      run: exit 1
-
   test:
     runs-on: ubuntu-latest
     defaults:
@@ -55,20 +49,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
 
     - name: Install Dependencies
       run: npm ci
 
     - name: Run Tests
-      run: npm test # Adjust the test script as per your project
-
-    - name: Check Test Exit Code
-      id: test-results
-      run: echo "::set-output name=exit-code::${?}"
-
-    - name: Fail the Job on Test Failure
-      if: steps.test-results.outputs.exit-code != '0'
-      run: exit 1
+      run: npm run test # Adjust the test script as per your project
 
   build:
     runs-on: ubuntu-latest
@@ -86,9 +74,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
     
     - name: Install Dependencies
       run: npm ci
+    
+    - name: Run Tests
+      run: npm run test # Adjust the test script as per your project
 
     - name: Run local development server with hot reloading and point to the backend default
       run: REACT_APP_MOVIE_API_URL=http://localhost:5000 npm start
