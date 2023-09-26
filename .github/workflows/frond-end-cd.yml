@@ -5,6 +5,13 @@ on: [push]
   #     - main
   #   paths:
   #     - 'starter/frontend/**'
+  workflow_call:
+    inputs:
+      sha_code:
+        description: 'a sha code is created randomly'
+        default: ${{ github.sha }}
+        required: false
+        type: string
 
 jobs:
   lint:
@@ -82,10 +89,9 @@ jobs:
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: frontend
-        IMAGE_TAG: ${{ github.sha }}
+        # IMAGE_TAG: ${{ github.sha }}
       run: |
-        export SHA=$IMAGE_TAG
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:${{ inputs.sha_code }} .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
     # - name: Login to Docker Hub
@@ -130,7 +136,7 @@ jobs:
         REPOSITORY: frontend
       run: |
         cd k8s
-        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/frontend:${{ SHA }}
+        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/frontend:${{ inputs.sha_code }}
         kustomize build | kubectl apply -f -
 
 
