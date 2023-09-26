@@ -129,7 +129,7 @@ jobs:
     - name: Apply the manifests to the cluster
       run: |
         cd k8s
-        kubectl apply -f -
+        kubectl apply -f deployment.yaml
 
 
 
