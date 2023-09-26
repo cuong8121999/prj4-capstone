@@ -7,49 +7,49 @@ on: [push]
   #     - 'starter/frontend/**'
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./starter/frontend/
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./starter/frontend/
 
-  #   steps:
-  #   - name: Checkout Repository
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
     
-  #   - name: Set up Node.js
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: 18
-  #       cache: 'npm'
-  #       cache-dependency-path: package-lock.json
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
 
-  #   - name: Install Dependencies
-  #     run: npm install
+    - name: Install Dependencies
+      run: npm install
 
-  #   - name: check code with eslint rules
-  #     run: npm run lint
+    - name: check code with eslint rules
+      run: npm run lint
       
-  # test:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./starter/frontend/
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./starter/frontend/
 
-  #   steps:
-  #   - name: Checkout Repository
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-  #   - name: Set up Node.js
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: 18
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-  #   - name: Install Dependencies
-  #     run: npm ci
+    - name: Install Dependencies
+      run: npm ci
 
-  #   - name: Run Tests
-  #     run: npm test # Adjust the test script as per your project
+    - name: Run Tests
+      run: npm test # Adjust the test script as per your project
   
   build-push-deploy:
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
       run:
         working-directory: ./starter/frontend/
 
-    # needs: [test, lint]   # This job depends on the "build" job
+    needs: [test, lint]   # This job depends on the "build" job
 
     steps:
     - name: Checkout Repository
@@ -80,14 +80,15 @@ jobs:
       with:
         mask-password: 'true'
 
-    # - name: Build, tag, and push docker image to Amazon ECR
-    #   env:
-    #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-    #     REPOSITORY: frontend
-    #     IMAGE_TAG: ${{ github.sha }}
-    #   run: |
-    #     docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-    #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    - name: Build, tag, and push docker image to Amazon ECR
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: frontend
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        echo SHA=$IMAGE_TAG 
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
     # - name: Login to Docker Hub
     #   uses: docker/login-action@v1
@@ -128,12 +129,10 @@ jobs:
 
     - name: Apply the manifests to the cluster
       env:
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: frontend
-        IMAGE_TAG: ${{ github.sha }}
       run: |
         cd k8s
-        kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
+        kustomize edit set image frontend=${{ steps.login-ecr.outputs.registry }}/fronted:$SHA
         kustomize build | kubectl apply -f -
 
 
