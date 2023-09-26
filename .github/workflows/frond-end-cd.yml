@@ -124,13 +124,13 @@ jobs:
     #     aws-region: us-east-1
 
     - name: Kubeconfig Auth
-      run: aws eks update-kubeconfig --name cluster --region us-east-1
+      run: aws eks update-kubeconfig --name cluster
 
     
     - name: Apply the manifests to the cluster
       run: |
         cd k8s
-        kustomize edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend:abcb59d6a489a40aabe3aa12ab87721510831d6c
+        kustomize edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend
         kustomize build .
 
 
