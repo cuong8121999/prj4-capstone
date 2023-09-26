@@ -2,7 +2,7 @@ name: Front End of Node JS Application - CD
 on:
   push:
     branches"
-      - '.github/workflows/'
+      - '.github/workflows/**'
   # push:
   #   branches:
   #     - main
