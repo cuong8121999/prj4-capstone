@@ -106,12 +106,13 @@ jobs:
     - name: Set the image tag
       run: |
         cd k8s
-        kustomize edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend:abcb59d6a489a40aabe3aa12ab87721510831d6c
+        kubectl edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend:abcb59d6a489a40aabe3aa12ab87721510831d6c
     
     - name: Apply the manifests to the cluster
       run: |
         cd k8s
-        kustomize build .
+        kubectl apply -f service.yaml
+        kubectl apply -f deployment.yaml
 
 
     
