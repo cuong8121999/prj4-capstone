@@ -106,7 +106,7 @@ jobs:
 
     - name: Apply the manifests to the cluster
       run: |
-        cd ../
+        cd k8s
         ls
 
     
