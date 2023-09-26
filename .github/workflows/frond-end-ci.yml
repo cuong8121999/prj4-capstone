@@ -1,6 +1,6 @@
 name: Front End of Node JS Application - CI
 
-on: [push]
+on: [workflow_dispatch]
   # # trigger on pull_request events
   # pull_request:
   #   # On the main branch
@@ -26,11 +26,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-    #     cache: 'npm'
-    #     cache-dependency-path: frontend/package-lock.json
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
 
     - name: Install Dependencies
-      run: ls
+      run: npm install
 
     - name: check code with eslint rules
       run: npm run lint
@@ -49,8 +49,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
 
     - name: Install Dependencies
       run: npm ci
@@ -74,8 +72,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
     
     - name: Install Dependencies
       run: npm ci
