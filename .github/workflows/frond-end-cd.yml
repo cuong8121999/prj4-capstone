@@ -104,6 +104,14 @@ jobs:
       run: |
         aws eks update-kubeconfig --name cluster --region us-east-1
 
+    - name: Set the image tag to the newer version
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPO_URL: 245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend:c814cfaeeb33b5d392b664ce817d0f3a5ca9f513
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        kustomize edit set image frontend=$ECR_REPO_URL:$IMAGE_TAG
+
 
     - name: Apply the manifests to the cluster
       run: |
