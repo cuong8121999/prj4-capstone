@@ -126,7 +126,6 @@ jobs:
     - name: Kubeconfig Auth
       run: aws eks update-kubeconfig --name cluster
 
-    
     - name: Apply the manifests to the cluster
       run: |
         cd k8s
