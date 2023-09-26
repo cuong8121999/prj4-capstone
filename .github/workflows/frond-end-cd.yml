@@ -130,8 +130,7 @@ jobs:
     - name: Apply the manifests to the cluster
       run: |
         cd k8s
-        kustomize edit set image frontend=245310611731.dkr.ecr.us-east-1.amazonaws.com/frontend
-        kustomize build .
+        kubectl apply -f -
 
 
 
