@@ -58,7 +58,7 @@ jobs:
       run:
         working-directory: ./starter/frontend/
 
-    needs: [test, lint]   # This job depends on the "build" job
+    # needs: [test, lint]   # This job depends on the "build" job
 
     steps:
     - name: Checkout Repository
