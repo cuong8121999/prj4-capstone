@@ -34,7 +34,7 @@ jobs:
       run:
         working-directory: ./starter/frontend/
 
-    # needs: test   # This job depends on the "build" job
+    needs: test   # This job depends on the "build" job
 
     steps:
     - name: Checkout Repository
@@ -100,9 +100,9 @@ jobs:
     #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_K8S }}
     #     aws-region: us-east-1
 
-    # - name: Kubeconfig Auth
-    #   run: |
-    #     aws eks update-kubeconfig --name cluster --region us-east-1
+    - name: Kubeconfig Auth
+      run: |
+        aws eks update-kubeconfig --name cluster --region us-east-1
 
     - name: Apply the manifests to the cluster
       run: |
