@@ -1,5 +1,5 @@
 name: Front End of Node JS Application - CD
-on: [push]
+on: [workflow_dispatch]
   # push:
   #   branches:
   #     - main
@@ -52,7 +52,7 @@ jobs:
     - name: Run Tests
       run: npm test # Adjust the test script as per your project
   
-  build-push-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:

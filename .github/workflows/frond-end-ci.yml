@@ -1,14 +1,14 @@
 name: Front End of Node JS Application - CI
 
-on: [workflow_dispatch]
-  # # trigger on pull_request events
-  # pull_request:
-  #   # On the main branch
-  #   branches:
-  #     - main 
-  #   # Only when code in fronted application changes
-  #   paths:
-  #     - 'starter/frontend/**'
+on:
+  # trigger on pull_request events
+  pull_request:
+    # On the main branch
+    branches:
+      - main 
+    # Only when code in fronted application changes
+    paths:
+      - 'starter/frontend/**'
   
 
 jobs:
@@ -26,8 +26,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+
 
     - name: Install Dependencies
       run: npm install
