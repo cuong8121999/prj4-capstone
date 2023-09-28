@@ -1,14 +1,14 @@
 name: Back-End of Node JS Application - CI
 
-on: [workflow_dispatch]
-  # # trigger on pull_request events
-  # pull_request:
-  #   # On the main branch
-  #   branches:
-  #     - main 
-  #   # Only when code in fronted application changes
-  #   paths:
-  #     - 'starter/frontend/**'
+on:
+  # trigger on pull_request events
+  pull_request:
+    # On the main branch
+    branches:
+      - main 
+    # Only when code in frontend application changes
+    paths:
+      - 'starter/frontend/**'
   
 
 jobs:

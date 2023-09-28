@@ -1,10 +1,10 @@
 name: Front End of Node JS Application - CD
-on: [workflow_dispatch]
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'starter/frontend/**'
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'starter/frontend/**'
 
 env:
   IMAGE_TAG: ${{ github.sha }}
